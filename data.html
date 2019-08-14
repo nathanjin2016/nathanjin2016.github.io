@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Bootstrap Visualization Dashbord</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,900&display=swap" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+
+
+<body>
+  <!-- Nav Bar Section -->
+  <div class="header">
+    <nav class="navbar navbar-expand-md navbar-light">
+      <h1 id="latid">Lattitude Analysis</h1>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
+        aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
+        <ul class="nav">
+          <li class="nav-item">
+            <a href="index.html" class="nav-link">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">Plots</a>
+            <div class="dropdown-menu" aria-labelledby="dropdownId">
+              <a class="dropdown-item" href="plots/maxtemp.html">Max Temperature</a>
+              <a class="dropdown-item" href="plots/humidity.html">Humidity</a>
+              <a class="dropdown-item" href="plots/cloudiness.html">Cloudiness</a>
+              <a class="dropdown-item" href="plots/windspeed.html">Wind Speed</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a href="comparison.html" class="nav-link">Comparison</a>
+          </li>
+          <li class="nav-item">
+            <a href="data.html" class="nav-link">Data</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Table Section -->
+  <div class="container">
+    <div class="table-responsive-sm table-hover">
+      <br />
+      <p>The following table includes all of the data used for plotting during this project.</p>
+      <div id="cities_table">
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="page-footer font-small blue" id="footid">
+    <div class="footer-copyright text-center py-3">© Copyright Nathan Jin 2019</div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: "data/cities.csv",
+        dataType: "text",
+        success: function (data) {
+          var employee_data = data.split(/\r?\n|\r/);
+          var table_data = '<table class="table table-bordered">';
+          for (var count = 0; count < employee_data.length; count++) {
+            var cell_data = employee_data[count].split(",");
+            table_data += '<tr>';
+            for (var cell_count = 0; cell_count < cell_data.length; cell_count++) {
+              if (count === 0) {
+                table_data += '<th>' + cell_data[cell_count] + '</th>';
+              }
+              else {
+                table_data += '<td>' + cell_data[cell_count] + '</td>';
+              }
+            }
+            table_data += '</tr>';
+          }
+          table_data += '</table>';
+          $('#cities_table').html(table_data);
+        }
+      });
+
+    });
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
